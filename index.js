@@ -17,6 +17,7 @@ const container = document.getElementById('viewer-container');
 const viewer = new IfcViewerAPI({ container });
 const camera = viewer.context.ifcCamera.activeCamera;
 const renderer = viewer.context.renderer;
+const scene = viewer.context.scene;
 console.log(renderer);
 viewer.grid.setGrid();
 
@@ -66,9 +67,8 @@ window.onkeyup = (event) => {
 const appLoop = () => {    
     fpsControlsMove();
     //controls.update();
-    renderer.render(scene, camera);
-    renderer.update();
-    renderer.renderer.setSize();
+    // renderer.render(scene, camera);
+    // renderer.update();    
     requestAnimationFrame(appLoop);
 };
 
@@ -171,11 +171,11 @@ async function loadIfc(url) {
 
     const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);   
     console.log(ifcProject);
-    //createTreeMenu(ifcProject);
+    createTreeMenu(ifcProject);
 
     loadingText.classList.add('hidden');
 
-    //const tree = document.getElementById('ifc-tree-menu'); 
+    const tree = document.getElementById('ifc-tree-menu'); 
     const matrixArr = viewer.IFC.loader.ifcManager.ifcAPI.GetCoordinationMatrix(model.modelID);     
     worldOrigin.x = -matrixArr[12];
     worldOrigin.y = matrixArr[14];
@@ -190,13 +190,12 @@ async function loadIfc(url) {
 ////////////////  Initialize App ////////////////
 function initilizeApp(){
     setupfpsControls(false);
-    // const tree = document.getElementById('ifc-tree-menu')
-    // const button = document.getElementById('model-tree-button');
-    // button.onclick = function() {
-    //     modelTreeToggle()
-    //     button.classList.toggle('button-active')
-    // }
-
+    const tree = document.getElementById('ifc-tree-menu')
+    const button = document.getElementById('model-tree-button');
+    button.onclick = function() {
+        modelTreeToggle()
+        button.classList.toggle('button-active')
+    }
 }
 
 ////////////////  Camera Controls  ////////////////

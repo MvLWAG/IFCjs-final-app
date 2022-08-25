@@ -121622,6 +121622,7 @@ class PointerLockControls extends EventDispatcher$1 {
 
 ////////////////  Global Variables  ////////////////
 let fpsControls;
+let modeltree = false;
 
 
 ////////////////  Viewer Setup  ////////////////
@@ -121629,6 +121630,7 @@ const container = document.getElementById('viewer-container');
 const viewer = new IfcViewerAPI({ container });
 const camera = viewer.context.ifcCamera.activeCamera;
 const renderer = viewer.context.renderer;
+viewer.context.scene;
 console.log(renderer);
 viewer.grid.setGrid();
 
@@ -121653,9 +121655,8 @@ window.onkeyup = (event) => {
 //Applcation loop
 const appLoop = () => {    
     //controls.update();
-    renderer.render(scene, camera);
-    renderer.update();
-    renderer.adjustRendererSize();
+    // renderer.render(scene, camera);
+    // renderer.update();    
     requestAnimationFrame(appLoop);
 };
 
@@ -121673,6 +121674,78 @@ function loadingCalculation(event) {
     text.innerText = calc;   
 }
 
+function createTreeMenu(ifcProject){
+    const root = document.getElementById('tree-root');
+    removeAllChildren(root);
+    const ifcProjectNode = createNestedChild(root, ifcProject);
+    ifcProject.children.forEach(child => {
+        constructTreeMenuNode(ifcProjectNode, child);
+    });
+}
+
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
+function nodeToString(node) { 
+    const text = `${node.type} - ${node.expressID}`;   
+    //console.log(text);
+    return text;
+}
+
+function constructTreeMenuNode(parent, node) {
+    const children = node.children;
+    if (children.length === 0) {
+        createSimpleChild(parent, node);
+        return;
+    }
+    const nodeElement = createNestedChild(parent, node);
+    children.forEach(child => {
+        constructTreeMenuNode(nodeElement, child);
+    });
+}
+
+function createNestedChild(parent, node) {
+    const content = nodeToString(node);
+    const root = document.createElement('li');
+    createTitle(root, content);
+    const childrenContainer = document.createElement('ul');
+    childrenContainer.classList.add("nested");
+    root.appendChild(childrenContainer);
+    parent.appendChild(root);
+    return childrenContainer;
+}
+
+function createTitle(parent, content) {
+    const title = document.createElement("span");
+    title.classList.add("caret");
+    title.classList.add("tree-list-item");
+    title.onclick = () => {
+        title.parentElement.querySelector(".nested").classList.toggle("active");
+        title.classList.toggle("caret-down");
+    };
+    title.textContent = content;
+    parent.appendChild(title);
+}
+
+function createSimpleChild(parent, node) {
+    const content = nodeToString(node);
+    const childNode = document.createElement('p');
+    childNode.textContent = content;
+    childNode.classList.add('tree-list-simple');
+    parent.appendChild(childNode);
+
+    childNode.onmouseenter = () => {
+        viewer.IFC.selector.prepickIfcItemsByID(0, [node.expressID]);
+    };
+
+    childNode.onclick = async () => {
+        viewer.IFC.selector.pickIfcItemsByID(0, [node.expressID]);
+    };
+}
+
 ////////////////  Async Functions  ////////////////
 async function loadIfc(url) {
 	const loadingText = document.getElementById('loading-text');
@@ -121685,11 +121758,11 @@ async function loadIfc(url) {
 
     const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);   
     console.log(ifcProject);
-    //createTreeMenu(ifcProject);
+    createTreeMenu(ifcProject);
 
     loadingText.classList.add('hidden');
 
-    //const tree = document.getElementById('ifc-tree-menu'); 
+    document.getElementById('ifc-tree-menu'); 
     const matrixArr = viewer.IFC.loader.ifcManager.ifcAPI.GetCoordinationMatrix(model.modelID);     
     worldOrigin.x = -matrixArr[12];
     worldOrigin.y = matrixArr[14];
@@ -121704,13 +121777,12 @@ async function loadIfc(url) {
 ////////////////  Initialize App ////////////////
 function initilizeApp(){
     setupfpsControls(false);
-    // const tree = document.getElementById('ifc-tree-menu')
-    // const button = document.getElementById('model-tree-button');
-    // button.onclick = function() {
-    //     modelTreeToggle()
-    //     button.classList.toggle('button-active')
-    // }
-
+    document.getElementById('ifc-tree-menu');
+    const button = document.getElementById('model-tree-button');
+    button.onclick = function() {
+        modelTreeToggle();
+        button.classList.toggle('button-active');
+    };
 }
 
 ////////////////  Camera Controls  ////////////////
@@ -121726,4 +121798,20 @@ function setupfpsControls(active){
     else {
         document.body.removeEventListener('click',this);
     }    
+}
+
+
+////////////////  ApplicationState Device  ////////////////
+
+function modelTreeToggle(){
+    console.log("toggle");    
+    const tree = document.getElementById('ifc-tree-menu');
+    if(modeltree)
+    {
+        tree.classList.add('hidden');   
+    }
+    else {
+        tree.classList.remove('hidden');    
+    }
+    modeltree = !modeltree;
 }
