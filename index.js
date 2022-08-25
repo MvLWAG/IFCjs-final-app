@@ -12,6 +12,7 @@ let firstPersonControls = false;
 let orbitControls = false;
 let modeltree = false;
 let readpropertiesCounter = 0;
+let properties;
 
 ////////////////  Viewer Setup  ////////////////
 const container = document.getElementById("viewer-container");
@@ -34,9 +35,9 @@ initilizeApp();
 const models = [];
 const worldOrigin = { x: 0, y: 0, z: 0 };
 
-//loadIfc("./models/01.ifc");
+loadIfc("./models/01.ifc");
 // loadIfc('./models/02.ifc');
-loadIfc('./models/03.ifc');
+//loadIfc('./models/03.ifc');
 // loadIfc('./models/04.ifc');
 //loadIfc('./models/05.ifc');
 
@@ -186,14 +187,18 @@ async function loadIfc(url) {
   loadingCaption.innerText = "Reading Properties: ";
   const result = await viewer.IFC.properties.serializeAllProperties(model,undefined,propertiesCalculation);
   console.log(result);
+  const file = new File(result, 'properties');
 
-  // Download the properties as JSON file
-  //const file = new File(result, "properties");
+  const rawProperties = await fetch(URL.createObjectURL(file));
+  properties = await rawProperties.json();
 
-  const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
-  console.log(ifcProject);
-  createTreeMenu(ifcProject);
+//   const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
+//   console.log(ifcProject);
+//   createTreeMenu(ifcProject);
 
+    // Get spatial tree
+    const tree2 = await constructSpatialTree();
+    console.log(tree2);
 
   const tree = document.getElementById("ifc-tree-menu");
   const matrixArr = viewer.IFC.loader.ifcManager.ifcAPI.GetCoordinationMatrix(
@@ -205,6 +210,74 @@ async function loadIfc(url) {
   
   loadingText.classList.add("hidden");
 }
+
+function getFirstItemOfType(type) {
+	return Object.values(properties).find(item => item.type === type);
+}
+
+function getAllItemsOfType(type) {
+	return Object.values(properties).filter(item => item.type === type);
+}
+
+
+async function constructSpatialTree() {
+	const ifcProject = getFirstItemOfType('IFCPROJECT');
+
+	const ifcProjectNode = {
+		expressID: ifcProject.expressID,
+		type: 'IFCPROJECT',
+		children: [],
+	};
+
+	const relContained = getAllItemsOfType('IFCRELAGGREGATES');
+	const relSpatial = getAllItemsOfType('IFCRELCONTAINEDINSPATIALSTRUCTURE');
+
+	await constructSpatialTreeNode(
+		ifcProjectNode,
+		relContained,
+		relSpatial,
+	);
+
+	return ifcProjectNode;
+
+}
+
+// Recursively constructs the spatial tree
+async function constructSpatialTreeNode(item,contains,spatials,) {
+	const spatialRels = spatials.filter(
+		rel => rel.RelatingStructure === item.expressID,
+	);
+	const containsRels = contains.filter(
+		rel => rel.RelatingObject === item.expressID,
+	);
+
+	const spatialRelsIDs = [];
+	spatialRels.forEach(rel => spatialRelsIDs.push(...rel.RelatedElements));
+
+	const containsRelsIDs = [];
+	containsRels.forEach(rel => containsRelsIDs.push(...rel.RelatedObjects));
+
+	const childrenIDs = [...spatialRelsIDs, ...containsRelsIDs];
+
+	const children = [];
+	for (let i = 0; i < childrenIDs.length; i++) {
+		const childID = childrenIDs[i];
+		const props = properties[childID];
+		const child = {
+			expressID: props.expressID,
+			type: props.type,
+			children: [],
+		};
+
+		await constructSpatialTreeNode(child, contains, spatials);
+		children.push(child);
+	}
+
+	item.children = children;
+}
+
+
+
 
 ////////////////  Initialize App ////////////////
 function initilizeApp() {
