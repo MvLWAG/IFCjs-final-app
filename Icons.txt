@@ -1,0 +1,143 @@
+pointer
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pointer" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M6 6l4.153 11.793a0.365 .365 0 0 0 .331 .207a0.366 .366 0 0 0 .332 -.207l2.184 -4.793l4.787 -1.994a0.355 .355 0 0 0 .213 -.323a0.355 .355 0 0 0 -.213 -.323l-11.787 -4.36z"></path>
+   <path d="M13.5 13.5l4.5 4.5"></path>
+</svg>
+
+Lineaal
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ruler-measure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M19.875 12c.621 0 1.125 .512 1.125 1.143v5.714c0 .631 -.504 1.143 -1.125 1.143h-15.875a1 1 0 0 1 -1 -1v-5.857c0 -.631 .504 -1.143 1.125 -1.143h15.75z"></path>
+   <path d="M9 12v2"></path>
+   <path d="M6 12v3"></path>
+   <path d="M12 12v3"></path>
+   <path d="M18 12v3"></path>
+   <path d="M15 12v2"></path>
+   <path d="M3 3v4"></path>
+   <path d="M3 5h18"></path>
+   <path d="M21 3v4"></path>
+</svg>
+
+
+schaar
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scissors" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="6" cy="7" r="3"></circle>
+   <circle cx="6" cy="17" r="3"></circle>
+   <line x1="8.6" y1="8.6" x2="19" y2="19"></line>
+   <line x1="8.6" y1="15.4" x2="19" y2="5"></line>
+</svg>
+
+Mes
+svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-slice" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M3 19l15 -15l3 3l-6 6l2 2a14 14 0 0 1 -14 4"></path>
+</svg>
+
+Mannetje staan
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-accessible" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>   
+   <path d="M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1"></path>
+   <circle cx="12" cy="7.5" r=".5" fill="currentColor"></circle>
+</svg>
+
+mannetje lopen
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-walk" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="13" cy="4" r="1"></circle>
+   <line x1="7" y1="21" x2="10" y2="17"></line>
+   <path d="M16 21l-2 -4l-3 -3l1 -6"></path>
+   <path d="M6 12l2 -3l4 -1l3 3l3 1"></path>
+</svg>
+
+camera
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-camera" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"></path>
+   <circle cx="12" cy="13" r="3"></circle>
+</svg>
+
+
+tools
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tools" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4"></path>
+   <line x1="14.5" y1="5.5" x2="18.5" y2="9.5"></line>
+   <polyline points="12 8 7 3 3 7 8 12"></polyline>
+   <line x1="7" y1="8" x2="5.5" y2="9.5"></line>
+   <polyline points="16 12 21 17 17 21 12 16"></polyline>
+   <line x1="16" y1="17" x2="14.5" y2="18.5"></line>
+</svg>
+
+
+vierkant -
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+   <line x1="9" y1="12" x2="15" y2="12"></line>
+</svg>
+
+vierkant +
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+   <line x1="9" y1="12" x2="15" y2="12"></line>
+   <line x1="12" y1="9" x2="12" y2="15"></line>
+</svg>
+
+
+X
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-letter-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <line x1="7" y1="4" x2="17" y2="20"></line>
+   <line x1="17" y1="4" x2="7" y2="20"></line>
+</svg>
+
+Y
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-letter-y" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M7 4l5 9l5 -9"></path>
+   <line x1="12" y1="13" x2="12" y2="20"></line>
+</svg>
+
+
+Z
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-letter-z" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M7 4h10l-10 16h10"></path>
+</svg>
+
+
+Model browser
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <rect x="9" y="3" width="6" height="6" rx="1"></rect>
+        <line x1="12" y1="9" x2="12" y2="12"></line>
+        <rect x="15" y="15" width="6" height="6" rx="1"></rect>
+        <rect x="3" y="15" width="6" height="6" rx="1"></rect>        
+        <line x1="6" y1="12" x2="18" y2="12"></line>
+        <line x1="6" y1="12" x2="6" y2="15"></line>
+        <line x1="18" y1="12" x2="18" y2="15"></line>
+</svg>
+
+XYZ
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">       
+        <line x1="0" y1="0" x2="0" y2="24"></line>
+        <line x1="0" y1="0" x2="24" y2="0"></line>
+        <line x1="0" y1="24" x2="24" y2="24"></line>
+        <line x1="24" y1="0" x2="24" y2="24"></line>
+
+        <!-- X -->
+        <line x1="9" y1="3" x2="15" y2="9"></line>
+        <line x1="15" y1="3" x2="9" y2="9"></line>
+        <!-- Y -->
+        <line x1="6" y1="18" x2="6" y2="20"></line>
+        <line x1="3" y1="14" x2="6" y2="17"></line>
+        <line x1="9" y1="14" x2="6" y2="17"></line>
+
+        <!-- Z -->
+        <line x1="15" y1="14" x2="20" y2="14"></line>
+        <line x1="15" y1="20" x2="20" y2="20"></line>
+        <line x1="15" y1="20" x2="20" y2="14"></line>
+     </svg>

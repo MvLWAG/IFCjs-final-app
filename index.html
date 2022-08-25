@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../../../favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="viewer-styles.css">
+    <title>IFC.js final app</title>
+</head>
+<body class="lightTheme">
+    <div id="viewer-container"></div>    
+    <div id="header" class="hidden">
+        <div id="toolbar">
+            <button id="model-tree-button" class="button" title="Model Tree">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <rect x="9" y="3" width="6" height="6" rx="1"></rect>
+                    <line x1="12" y1="9" x2="12" y2="12"></line>
+                    <rect x="15" y="15" width="6" height="6" rx="1"></rect>
+                    <rect x="3" y="15" width="6" height="6" rx="1"></rect>        
+                    <line x1="6" y1="12" x2="18" y2="12"></line>
+                    <line x1="6" y1="12" x2="6" y2="15"></line>
+                    <line x1="18" y1="12" x2="18" y2="15"></line>
+                </svg>
+            </button>
+            <button id="first-person-button" class="button" title="First Person Camera" >
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-walk" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="13" cy="4" r="1"></circle>
+                    <line x1="7" y1="21" x2="10" y2="17"></line>
+                    <path d="M16 21l-2 -4l-3 -3l1 -6"></path>
+                    <path d="M6 12l2 -3l4 -1l3 3l3 1"></path>
+                 </svg>
+            </button>
+            <button id="clipper-button" class="button" title="Section Plane" >
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-scissors" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="6" cy="7" r="3"></circle>
+                    <circle cx="6" cy="17" r="3"></circle>
+                    <line x1="8.6" y1="8.6" x2="19" y2="19"></line>
+                    <line x1="8.6" y1="15.4" x2="19" y2="5"></line>
+                 </svg> </button>
+            <button class="button" href="./model-viewer.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M4 22h-4v-4h4v4zm0-12h-4v4h4v-4zm0-8h-4v4h4v-4zm3 0v4h17v-4h-17zm0 12h17v-4h-17v4zm0 8h17v-4h-17v4z"/></svg>
+            </button>
+            <button class="button" href="./model-viewer.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M1.438 16.873l-1.438 7.127 7.127-1.437 16.874-16.872-5.69-5.69-16.873 16.872zm1.12 4.572l.722-3.584 2.86 2.861-3.582.723zm18.613-15.755l-13.617 13.617-2.86-2.861 13.617-13.617 2.86 2.861z"/></svg>
+            </button>
+        </div>
+    </div>
+
+  
+   
+    <div id="loading-text" class="hidden">
+        <p >Loading:</p>
+        <p id="progress-text">0</p>
+        <p>%</p>
+    </div>
+     
+   
+
+
+
+<!--
+    <div id="ifc-tree-menu" class="ifc-tree-menu hidden">
+        <ul id="myUL">
+            <li id="tree-root">
+                
+            </li>         
+        </ul>
+    </div> -->
+
+
+    <script src="bundle.js"></script>
+</body>
+</html>
