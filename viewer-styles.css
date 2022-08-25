@@ -110,9 +110,7 @@ html, body {
     z-index: 1;
     flex-grow: 1; 
     resize: both;
-    width: 30%;
-    max-width: 30%;
-    min-width: 10%;
+    width: 300px;
  }
 
 /*   -------------- IFC Tree Menu ----------------- */
