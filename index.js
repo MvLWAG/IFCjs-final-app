@@ -2,6 +2,7 @@
 import { Color, Vector3} from 'three';
 import { IfcViewerAPI, NavigationModes } from 'web-ifc-viewer';
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
+import Stats from 'three/examples/jsm/libs/stats.module'
 
 ////////////////  Global Variables  ////////////////
 let fpsControls;
@@ -10,6 +11,8 @@ let fpsControls;
 let firstPersonControls = false;
 let orbitControls = false;
 let modeltree = false;
+
+
 
 
 ////////////////  Viewer Setup  ////////////////
@@ -22,6 +25,10 @@ console.log(renderer);
 viewer.grid.setGrid();
 
 initilizeApp();
+
+// const stats = new Stats();
+// stats.showPanel( 2 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+// document.body.appendChild( stats.dom );
 
 //viewer.context.ifcCamera.cameraControls.enabled = false;
 
@@ -64,11 +71,13 @@ window.onkeyup = (event) => {
 
 ////////////////  Functions  ////////////////
 //Applcation loop
-const appLoop = () => {    
+const appLoop = () => {  
+   
     fpsControlsMove();
     //controls.update();
     // renderer.render(scene, camera);
     // renderer.update();    
+    
     requestAnimationFrame(appLoop);
 };
 
@@ -226,6 +235,8 @@ function fpsControlsMove(){
 
 
 ////////////////  User Interaction  ////////////////
+
+//Firstperson controls
 function fpsControlHelper (event,bool){
     if(event.code === "KeyW"){forward = bool;}
     if(event.code === "KeyS"){backward = bool;}
@@ -235,32 +246,6 @@ function fpsControlHelper (event,bool){
     if(event.code === "KeyQ"){down = bool;}
     if(event.code === "ShiftLeft"){extraSpeed = bool;}
 }
-
-var sidebarresize = document.getElementById("sidebar-resize");
-var sidebarleft = document.getElementById("sidebar-left");
-var sidebarcontainer = document.getElementById("sidebar-container");
-var moveX =  sidebarleft.getBoundingClientRect().width + sidebarresize.getBoundingClientRect().width / 2;
-var drag = false;
-
-sidebarresize.addEventListener("mousedown", function (e) {
-   drag = true;
-   moveX = e.x;
-   sidebarleft.classList.remove("pointer-none");
-   sidebarleft.classList.add("pointer-auto");
-});
-
-sidebarcontainer.addEventListener("mousemove", function (e) {
-   moveX = e.x;
-   if (drag)
-        sidebarleft.style.width =
-        moveX + sidebarresize.getBoundingClientRect().width / 2 + "px";
-});
-
-sidebarcontainer.addEventListener("mouseup", function (e) {
-   drag = false;
-   sidebarleft.classList.remove("pointer-auto");
-   sidebarleft.classList.add("pointer-none");
-});
 
 ////////////////  ApplicationState Device  ////////////////
 

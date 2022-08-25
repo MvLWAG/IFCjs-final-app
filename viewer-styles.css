@@ -96,38 +96,24 @@ html, body {
     pointer-events: none;   
 }
 
-#sidebar-left {
-    background-color: transparent;
-    width: 200px;
-    min-width: 50%;    
- }
- #sidebar-resize {
-    background: var(--secondary-color);
-    height: 100%;
-    width: 5px;
-    cursor: col-resize;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 10;
-    pointer-events: all;
-    
- }
- #sidebar-right {
-    flex-grow: 1;
+ #sidebar-content-container {
+    position: fixed;
+    margin: 0;
+    top: 10%;  
+    right: 0%;
+    height: 90%;
     background-color: var(--primary-color);
-    max-width: 50%;
-    min-width: 15%;
-    pointer-events: all;
-    
+    border-left: 5px solid var(--secondary-color);
+    border-right: 5px solid var(--secondary-color);
+    border-bottom: 5px solid var(--secondary-color);    
+    display: flex;    
+    z-index: 1;
+    flex-grow: 1; 
+    resize: both;
+    width: 30%;
+    max-width: 30%;
+    min-width: 10%;
  }
-
-.pointer-none{
-    pointer-events: none;
-}
-
-.pointer-auto{
-    pointer-events: auto;
-}
 
 /*   -------------- IFC Tree Menu ----------------- */
 .ifc-tree-menu {

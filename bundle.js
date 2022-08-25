@@ -121625,6 +121625,8 @@ let fpsControls;
 let modeltree = false;
 
 
+
+
 ////////////////  Viewer Setup  ////////////////
 const container = document.getElementById('viewer-container');
 const viewer = new IfcViewerAPI({ container });
@@ -121653,10 +121655,11 @@ window.onkeyup = (event) => {
 
 ////////////////  Functions  ////////////////
 //Applcation loop
-const appLoop = () => {    
+const appLoop = () => {  
     //controls.update();
     // renderer.render(scene, camera);
     // renderer.update();    
+    
     requestAnimationFrame(appLoop);
 };
 
@@ -121799,32 +121802,6 @@ function setupfpsControls(active){
         document.body.removeEventListener('click',this);
     }    
 }
-
-var sidebarresize = document.getElementById("sidebar-resize");
-var sidebarleft = document.getElementById("sidebar-left");
-var sidebarcontainer = document.getElementById("sidebar-container");
-var moveX =  sidebarleft.getBoundingClientRect().width + sidebarresize.getBoundingClientRect().width / 2;
-var drag = false;
-
-sidebarresize.addEventListener("mousedown", function (e) {
-   drag = true;
-   moveX = e.x;
-   sidebarleft.classList.remove("pointer-none");
-   sidebarleft.classList.add("pointer-auto");
-});
-
-sidebarcontainer.addEventListener("mousemove", function (e) {
-   moveX = e.x;
-   if (drag)
-        sidebarleft.style.width =
-        moveX + sidebarresize.getBoundingClientRect().width / 2 + "px";
-});
-
-sidebarcontainer.addEventListener("mouseup", function (e) {
-   drag = false;
-   sidebarleft.classList.remove("pointer-auto");
-   sidebarleft.classList.add("pointer-none");
-});
 
 ////////////////  ApplicationState Device  ////////////////
 
