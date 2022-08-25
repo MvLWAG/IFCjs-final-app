@@ -69,11 +69,10 @@ window.onkeyup = (event) => {
 ////////////////  Functions  ////////////////
 //Applcation loop
 const appLoop = () => {
-    fpsControlsMove();
+    fpsControlsMove();    
     //controls.update();
     // renderer.render(scene, camera);
     // renderer.update();
-
     requestAnimationFrame(appLoop);
 };
 
@@ -121,8 +120,6 @@ function nodeToString(node) {
         console.log("longname = null");
         //nodeText = foundProperties.ObjectType;
     }
-
-
     const text = `${foundProperties.ObjectType} - ${node.expressID}`;
     return text;
 }
@@ -216,31 +213,39 @@ async function loadIfc(url) {
 
 ////////////////  Initialize App ////////////////
 function initilizeApp() {
-  setupfpsControls(false);
+  setupfpsControls();
   const tree = document.getElementById("ifc-tree-menu");
-  const button = document.getElementById("model-tree-button");
-  button.onclick = function () {
+  const modeltreebutton = document.getElementById("model-tree-button");
+  modeltreebutton.onclick = function () {
     modelTreeToggle();
-    button.classList.toggle("button-active");
+    modeltreebutton.classList.toggle("button-active");
+  };
+  const fpsbutton = document.getElementById("first-person-button");
+    fpsbutton.onclick = function () {
+    firstPersonToggle();
+    fpsbutton.classList.toggle("button-active");
   };
 }
 
 ////////////////  Camera Controls  ////////////////
-function setupfpsControls(active) {
-  fpsControls = new PointerLockControls(camera, document.body);
-  //add event listener to your document.body
-  if (active) {
-    document.body.addEventListener(
-      "click",
-      function () {
-        //lock mouse on screen
-        fpsControls.lock();
-      },
-      false
-    );
-  } else {
+
+function togglefpsControls(active){  
+//add event listener to your document.body
+if (active) {
+  fpsControls = new PointerLockControls(camera, document.body);  
+  document.body.addEventListener("click",function () {
+    //lock mouse on screen
+    fpsControls.lock();
+    }, false );
+} else { 
     document.body.removeEventListener("click", this);
+    fpsControls.unlock();
+    console.log("remove listener");
   }
+}
+
+function setupfpsControls(active) {
+  fpsControls = new PointerLockControls(camera, document.body);  
 }
 
 function fpsControlsMove() {
@@ -293,12 +298,15 @@ function fpsControlHelper(event, bool) {
   if (event.code === "ShiftLeft") {
     extraSpeed = bool;
   }
+  if (event.code === "Escape"){
+    fpsControls.unlock();
+    togglefpsControls(false);
+  }
 }
-
 ////////////////  ApplicationState Device  ////////////////
 
 function modelTreeToggle() {
-  console.log("toggle");
+  console.log("toggleModelTree");
   const tree = document.getElementById("ifc-tree-menu");
   if (modeltree) {
     tree.classList.add("hidden");
@@ -306,4 +314,20 @@ function modelTreeToggle() {
     tree.classList.remove("hidden");
   }
   modeltree = !modeltree;
+}
+
+function firstPersonToggle() {
+  console.log("toggleFPS");
+  firstPersonControls = !firstPersonControls;
+  if(firstPersonControls)
+  {
+    togglefpsControls(true);
+    viewer.context.renderer.postProduction.active = false;
+    viewer.context.ifcCamera.cameraControls.enabled = false;
+  }
+  else{
+    togglefpsControls(false);
+    viewer.context.renderer.postProduction.active = true;
+    viewer.context.ifcCamera.cameraControls.enabled = true;
+ }
 }
