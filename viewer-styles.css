@@ -218,11 +218,11 @@ ul, #myUL {
     user-select: none;
 }
 
-/*   -------------- FPS controls ----------------- */
-#fps-text{   
+/*   -------------- User Instruction Text ----------------- */
+#instruction-text{   
     color: var(--textcolor);
     top: 20px;
-    font-size: x-large;
+    font-size: large;
     position: fixed;
     text-align: center;
     display: flex;

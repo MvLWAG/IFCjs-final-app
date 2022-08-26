@@ -6,6 +6,9 @@ import Stats from "three/examples/jsm/libs/stats.module";
 
 ////////////////  Global Variables  ////////////////
 let fpsControls;
+let instructiontext = document.getElementById("instruction-text");
+let fpsHelper;
+let sidebar;
 
 //Variables for StateDevice
 let firstPersonControls = false;
@@ -13,7 +16,8 @@ let orbitControls = false;
 let modeltree = false;
 let readpropertiesCounter = 0;
 let properties;
-let fpsHelper;
+let clipper = false;
+
 
 ////////////////  Viewer Setup  ////////////////
 const container = document.getElementById("viewer-container");
@@ -66,6 +70,13 @@ window.onkeyup = (event) => {
         fpsControlHelper(event, false);
     }
 };
+
+window.ondblclick = (event) => {
+  console.log(event);
+  if(clipper){
+      viewer.clipper.createPlane();
+  }
+}
 
 ////////////////  Functions  ////////////////
 //Applcation loop
@@ -217,6 +228,7 @@ function initilizeApp() {
   setupfpsControls();
   const tree = document.getElementById("ifc-tree-menu");
   const modeltreebutton = document.getElementById("model-tree-button");
+  sidebar = document.getElementById("sidebar-content-container");
   modeltreebutton.onclick = function () {
     modelTreeToggle();
     modeltreebutton.classList.toggle("button-active");
@@ -226,12 +238,15 @@ function initilizeApp() {
     firstPersonToggle();
     fpsbutton.classList.toggle("button-active");
   };
+  const clipperbutton = document.getElementById("clipper-button");
+  clipperbutton.onclick = function () {
+    clipperToggle();
+    clipperbutton.classList.toggle("button-active");
+  };
+
 }
 
 ////////////////  Camera Controls  ////////////////
-
-
-
 function togglefpsControls(active){  
 if (active) {
   fpsHelper = document.createElement('a');
@@ -242,15 +257,14 @@ if (active) {
     fpsControls.lock();
     }, false );
     fpsHelper.click();
-    const fpstext = document.getElementById('fps-text');
-    fpstext.classList.remove("hidden"); 
+    instructiontextSet("Press R to Exit First Person");
 } 
 else {   
     console.log(fpsControls);
     fpsControls.unlock();
     fpsHelper.remove();    
-    const fpstext = document.getElementById('fps-text');
-    fpstext.classList.add("hidden");    
+    instructiontextSet("");
+    viewer.context.getCamera().position = camera.position;    
   }
 }
 
@@ -284,7 +298,6 @@ function fpsControlsMove() {
 }
 
 ////////////////  User Interaction  ////////////////
-
 //Firstperson controls
 function fpsControlHelper(event, bool) {
   if (event.code === "KeyW") {
@@ -313,6 +326,12 @@ function fpsControlHelper(event, bool) {
     fpsbutton.click();
   }
 }
+
+function instructiontextSet(text){
+  instructiontext.classList.toggle('hidden');
+  instructiontext.innerHTML = text;
+}
+
 ////////////////  ApplicationState Device  ////////////////
 
 function modelTreeToggle() {
@@ -339,5 +358,15 @@ function firstPersonToggle() {
     togglefpsControls(false);
     viewer.context.renderer.postProduction.active = true;
     viewer.context.ifcCamera.cameraControls.enabled = true;
- }
+    
+ } 
 }
+
+function clipperToggle(){
+  console.log("ToggleClipper")
+  sidebar.classList.toggle("hidden");  
+  instructiontextSet("Double click surface to add section plane");
+  viewer.clipper.active = true;
+  clipper = !clipper;
+}
+
