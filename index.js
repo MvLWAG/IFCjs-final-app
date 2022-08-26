@@ -69,17 +69,27 @@ window.onkeyup = (event) => {
     if (firstPersonControls) {
         fpsControlHelper(event, false);
     }
+    if(clipper){
+      clipperHelper(event);
+    }
 };
 
 window.ondblclick = (event) => {
   console.log(event);
-  if(clipper){
-      viewer.clipper.createPlane();
+  if(clipper){   
+      createClipperPlane();
   }
 }
 
 ////////////////  Functions  ////////////////
-//Applcation loop
+
+
+////////////////  Clipper Functions  ////////////////
+function createClipperPlane(){
+  viewer.clipper.createPlane(); 
+}
+
+////////////////  ApplicationLoop  ////////////////
 const appLoop = () => {
     fpsControlsMove();    
     //controls.update();
@@ -327,6 +337,12 @@ function fpsControlHelper(event, bool) {
   }
 }
 
+function clipperHelper(event) {
+  if (event.code === "Delete") {
+    viewer.clipper.deleteAllPlanes();
+  }  
+}
+
 function instructiontextSet(text){
   instructiontext.classList.toggle('hidden');
   instructiontext.innerHTML = text;
@@ -363,10 +379,9 @@ function firstPersonToggle() {
 }
 
 function clipperToggle(){
-  console.log("ToggleClipper")
-  sidebar.classList.toggle("hidden");  
-  instructiontextSet("Double click surface to add section plane");
-  viewer.clipper.active = true;
+  console.log("ToggleClipper")  
+  instructiontextSet("Double click surface to add section plane, Press Delete to Remove planes");
+  viewer.clipper.active = !clipper;
   clipper = !clipper;
 }
 

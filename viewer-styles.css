@@ -94,7 +94,6 @@ html, body {
     display: flex;
     width: 100%;
     z-index: 1;
-    pointer-events: none;   
 }
 
  #sidebar-content-container {
@@ -108,19 +107,35 @@ html, body {
     border-right: 5px solid var(--secondary-color);
     border-bottom: 5px solid var(--secondary-color);    
     display: flex;    
-    z-index: 1;
-    flex-grow: 1; 
-    resize: both;
+    z-index: 1;  
     width: 300px;
  }
+
+
+/*   -------------- Footer ----------------- */
+ #footer{
+    position: fixed;
+    top: 90%;    
+    left: 0;
+    height: 10%;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--textcolor); 
+    display: flex;
+    border: 5px solid var(--secondary-color);
+    z-index: 1;
+    min-height: 70px;
+}
+
+
 
 /*   -------------- IFC Tree Menu ----------------- */
 .ifc-tree-menu {
     position: fixed;
-    top: 10%;       
+    top: 15%;       
     overflow-y: scroll;
     /* background-color: white; */
-    height: 90%;
+    height: 85%;
     z-index: 1;
     color:  var(--textcolor);
     line-height:30px;  
@@ -200,6 +215,24 @@ ul, #myUL {
 .active {
     display: block;
     margin-left: 10px;
+}
+
+/*   -------------- Clipping ----------------- */
+#clippingplanes-info{
+    line-height: 20px;
+}
+
+.clippingplane{
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.clippingplane-text{    
+    margin: 5px;
+    justify-content:center;
+    text-align: left;
+    width: 250px ;
 }
 
 
