@@ -13,6 +13,7 @@ let orbitControls = false;
 let modeltree = false;
 let readpropertiesCounter = 0;
 let properties;
+let fpsHelper;
 
 ////////////////  Viewer Setup  ////////////////
 const container = document.getElementById("viewer-container");
@@ -229,23 +230,32 @@ function initilizeApp() {
 
 ////////////////  Camera Controls  ////////////////
 
+
+
 function togglefpsControls(active){  
-//add event listener to your document.body
 if (active) {
-  fpsControls = new PointerLockControls(camera, document.body);  
-  document.body.addEventListener("click",function () {
+  fpsHelper = document.createElement('a');
+  document.body.appendChild(fpsHelper)
+  fpsControls = new PointerLockControls(camera, fpsHelper);  
+  fpsHelper.addEventListener("click",function () {
     //lock mouse on screen
     fpsControls.lock();
     }, false );
-} else { 
-    document.body.removeEventListener("click", this);
+    fpsHelper.click();
+    const fpstext = document.getElementById('fps-text');
+    fpstext.classList.remove("hidden"); 
+} 
+else {   
+    console.log(fpsControls);
     fpsControls.unlock();
-    console.log("remove listener");
+    fpsHelper.remove();    
+    const fpstext = document.getElementById('fps-text');
+    fpstext.classList.add("hidden");    
   }
 }
 
 function setupfpsControls(active) {
-  fpsControls = new PointerLockControls(camera, document.body);  
+  fpsControls = new PointerLockControls(camera, fpsHelper);  
 }
 
 function fpsControlsMove() {
@@ -298,9 +308,9 @@ function fpsControlHelper(event, bool) {
   if (event.code === "ShiftLeft") {
     extraSpeed = bool;
   }
-  if (event.code === "Escape"){
-    fpsControls.unlock();
-    togglefpsControls(false);
+  if (event.code === "KeyR"){    
+    const fpsbutton = document.getElementById("first-person-button");
+    fpsbutton.click();
   }
 }
 ////////////////  ApplicationState Device  ////////////////

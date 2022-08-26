@@ -44,6 +44,7 @@ html, body {
     display: flex;
     border: 5px solid var(--secondary-color);
     z-index: 1;
+    min-height: 70px;
 }
 
 #toolbar{
@@ -217,7 +218,21 @@ ul, #myUL {
     user-select: none;
 }
 
-
+/*   -------------- FPS controls ----------------- */
+#fps-text{   
+    color: var(--textcolor);
+    top: 20px;
+    font-size: x-large;
+    position: fixed;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    flex-direction: row;
+    user-select: none;
+    width: 100vw;
+}
 /*   -------------- Viewer ---------------- */
 #viewer-container {
     position: fixed;
@@ -229,5 +244,6 @@ ul, #myUL {
     margin: 0;
     padding: 0;
     z-index: 0;
+    overflow: hidden;
 }
 
