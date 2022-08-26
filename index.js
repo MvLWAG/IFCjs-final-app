@@ -1,5 +1,5 @@
 ////////////////  Imports  ////////////////
-import { Color, Vector3 } from "three";
+import { Color, Vector3, MeshLambertMaterial } from "three";
 import { IfcViewerAPI, NavigationModes } from "web-ifc-viewer";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import Stats from "three/examples/jsm/libs/stats.module";
@@ -40,8 +40,8 @@ initilizeApp();
 const models = [];
 const worldOrigin = { x: 0, y: 0, z: 0 };
 
-//loadIfc("./models/01.ifc");
-loadIfc('./models/02.ifc');
+loadIfc("./models/01.ifc");
+//loadIfc('./models/02.ifc');
 //loadIfc('./models/03.ifc');
 // loadIfc('./models/04.ifc');
 //loadIfc('./models/05.ifc');
@@ -189,7 +189,8 @@ function createSimpleChild(parent, node) {
     parent.appendChild(childNode);
 
     childNode.onmouseenter = () => {
-        viewer.IFC.selector.prepickIfcItemsByID(0, [node.expressID]);
+        //viewer.IFC.selector.prepickIfcItemsByID(0, [node.expressID]);
+        viewer.IFC.selector.highlightIfcItemsByID(0,[node.expressID]);
     };
 
     childNode.onclick = async () => {
@@ -253,6 +254,13 @@ function initilizeApp() {
     clipperToggle();
     clipperbutton.classList.toggle("button-active");
   };
+
+  // Setup Selector Colors';
+  // const highlightMaterial = new MeshLambertMaterial({  color: 'cyan',
+  // transparent: true,
+  // opacity: 0.9})
+  console.log(viewer.IFC.selector.defHighlightMat);
+  //viewer.IFC.selector.defHighlightMat = highlightMaterial;
 
 }
 
@@ -349,12 +357,12 @@ function instructiontextSet(text){
 }
 
 ////////////////  ApplicationState Device  ////////////////
-
 function modelTreeToggle() {
   console.log("toggleModelTree");
   const tree = document.getElementById("ifc-tree-menu");
   if (modeltree) {
     tree.classList.add("hidden");
+    viewer.IFC.selector.unHighlightIfcItems();
   } else {
     tree.classList.remove("hidden");
   }
