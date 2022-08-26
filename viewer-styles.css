@@ -52,7 +52,7 @@ html, body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
- 
+    width: 100vw;
 }
 
 .button {
@@ -115,24 +115,42 @@ html, body {
 /*   -------------- Footer ----------------- */
  #footer{
     position: fixed;
-    top: 90%;    
+    bottom: 0%;    
     left: 0;
-    height: 10%;
+    height: 7%;
     width: 100%;
     background-color: var(--primary-color);
     color: var(--textcolor); 
     display: flex;
     border: 5px solid var(--secondary-color);
     z-index: 1;
-    min-height: 70px;
+    min-height: 50px;
+ }
+
+#instruction-text{   
+    color: var(--textcolor);
+    padding: 5px;   
+    margin: 5px;
+    font-size: large;
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    z-index: 2;
+    flex-direction: row;
+    user-select: none;
+    width: 50vw;
+    height: max-content;
 }
+
 
 
 
 /*   -------------- IFC Tree Menu ----------------- */
 .ifc-tree-menu {
     position: fixed;
-    top: 15%;       
+    top: 10%;       
     overflow-y: scroll;
     /* background-color: white; */
     height: 85%;
@@ -251,21 +269,7 @@ ul, #myUL {
     user-select: none;
 }
 
-/*   -------------- User Instruction Text ----------------- */
-#instruction-text{   
-    color: var(--textcolor);
-    top: 20px;
-    font-size: large;
-    position: fixed;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    flex-direction: row;
-    user-select: none;
-    width: 100vw;
-}
+
 /*   -------------- Viewer ---------------- */
 #viewer-container {
     position: fixed;
