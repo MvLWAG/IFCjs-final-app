@@ -286,3 +286,17 @@ ul, #myUL {
     overflow: hidden;
 }
 
+.ifcjs-dimension-preview {
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--highlight-color);
+    border-radius: 1rem;
+    opacity: 0.5;
+}
+
+.ifcjs-dimension-label {
+    background-color: var(--contrast-color);
+    color: var(--primary-color);
+    padding: 4px;
+    border-radius: 4px;
+}

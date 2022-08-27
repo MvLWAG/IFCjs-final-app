@@ -19,7 +19,9 @@ let modeltree = false;
 let properties;
 let clipper = false;
 let picker = false;
+let dimension = false;
 let floorplan = false
+
 
 
 ////////////////  Viewer Setup  ////////////////
@@ -63,6 +65,9 @@ window.onkeydown = (event) => {
     if(clipper){
       clipperHelper(event);
     }   
+    if(dimension){
+      dimensionHelper(event);
+    }
 };
 
 window.onkeyup = (event) => {
@@ -77,6 +82,9 @@ window.ondblclick = (event) => {
   if(clipper){   
       createClipperPlane();
   }
+  if(dimension){
+    createDimension();    
+  }
 }
 
 window.onmousemove = async () => {
@@ -88,8 +96,18 @@ window.onmousemove = async () => {
 }
 ////////////////  Functions  ////////////////
 
+////////////////  Dimension Functions  ////////////////
+function createDimension(){
+  viewer.dimensions.create();
+  const i = viewer.dimensions.getDimensionsLines.length;
+  const dim = viewer.dimensions.getDimensionsLines[i-1];
+  const text = dim.start.distanceTo(dim.end).toFixed(3) + ' m';
+  dim.textLabel.element.innerText = text;
+}
+
 
 ////////////////  Clipper Functions  ////////////////
+
 function createClipperPlane(){
   viewer.clipper.createPlane(); 
 }
@@ -270,7 +288,11 @@ function initilizeApp() {
     clipperToggle();
     clipperbutton.classList.toggle("button-active");
   };
-
+  const dimensiobutton = document.getElementById("dimension-button");
+  dimensiobutton.onclick = function () {
+    dimensionToggle();
+    dimensiobutton.classList.toggle("button-active");
+  };
   const floorplanbutton = document.getElementById("floorplan-button");
   floorplanbutton.onclick = function (){
     floorplanToggle();
@@ -365,6 +387,12 @@ function clipperHelper(event) {
   }  
 }
 
+function dimensionHelper(event) {
+  if (event.code === "Delete") {
+    viewer.dimensions.deleteAll();
+  }  
+}
+
 function instructiontextSet(text){
   instructiontext.classList.toggle('hidden');
   instructiontext.innerHTML = text;
@@ -403,14 +431,13 @@ function firstPersonToggle() {
   else{
     togglefpsControls(false);
     viewer.context.renderer.postProduction.active = true;
-    viewer.context.ifcCamera.cameraControls.enabled = true;
-    
+    viewer.context.ifcCamera.cameraControls.enabled = true;   
  } 
 }
 
 function clipperToggle(){
   console.log("ToggleClipper")  
-  instructiontextSet("Double click surface to add section plane, Press Delete to Remove planes");
+  instructiontextSet("Double click surface to add section plane, Press Delete to remove planes");
   viewer.clipper.active = !clipper;
   clipper = !clipper;
 }
@@ -431,7 +458,20 @@ function floorplanToggle(){
     viewer.plans.exitPlanView();
     viewer.edges.toggle('planview',false);
   }
-
   floorplan = !floorplan;
+}
+
+function dimensionToggle(){
+  console.log('dimensiontoggle') 
+  instructiontextSet("Double click on endpoints to start and finish dimension, Press Delete to remove dimensions"); 
+  if(!dimension){
+    viewer.dimensions.active = true;
+    viewer.dimensions.previewActive = true;    
+  }
+  else{
+    viewer.dimensions.active = true;
+    viewer.dimensions.previewActive = true;    
+  }
+  dimension = !dimension;
 }
 
