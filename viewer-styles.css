@@ -23,6 +23,7 @@
     --primary-color: #f8f8f8;
     --secondary-color: #cfcfcf;
     --highlight-color:#D31A44;
+    --contrast-color:#094e63;
   }
 
 html, body {
@@ -48,7 +49,17 @@ html, body {
     min-height: 70px;
 }
 
+#toggle-container{
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+}
+
 #toolbar{
+    font-size: xx-large;
     display: flex;
     flex-direction: row;
     justify-content: center;

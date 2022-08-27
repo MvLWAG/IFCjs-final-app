@@ -296,6 +296,10 @@ async function loadIfc(url) {
 ////////////////  Initialize App ////////////////
 function initilizeApp() {
   setupfpsControls();
+  const uiToggle = document.getElementById("themetoggle");
+  uiToggle.onclick = function () {
+    toggleUI();   
+  };
   tree = document.getElementById("ifc-tree-menu");  
   sidebar = document.getElementById("sidebar-content-container");
   coordinatesbar = document.getElementById("coordinates-bar");
@@ -474,6 +478,7 @@ function clipperToggle(){
 }
 
 function floorplanToggle(){
+  console.log('dimensiontoggle')   
   if(!floorplan){
     const id = models[0].modelID;
     const plans = viewer.plans.getAll(id);
@@ -484,10 +489,12 @@ function floorplanToggle(){
     // console.log(worldOrigin);
     viewer.plans.goTo(models[0].modelID,plans[0]);
     viewer.edges.toggle('planview',true);
+    viewer.context.renderer.postProduction.active = false;
   }
   else{
     viewer.plans.exitPlanView();
     viewer.edges.toggle('planview',false);
+    viewer.context.renderer.postProduction.active = true;
   }
   floorplan = !floorplan;
 }
@@ -511,8 +518,6 @@ function dimensionToggle(){
   dimension = !dimension;
 }
 
-
-
 ////////////////  Utils  ////////////////
 function roundTo(n, digits) {
   var negative = false;
@@ -530,4 +535,24 @@ function roundTo(n, digits) {
       n = (n * -1).toFixed(digits);
   }
   return n;
+}
+
+////////////////  UI Theme  ////////////////
+function toggleUI(){
+  console.log("toggleUI");
+  const body = document.body;
+  const dark = body.classList.contains('darkTheme');
+  const uiToggle = document.getElementById("themetoggle");
+  if(dark){
+    body.classList.add("lightTheme")
+    body.classList.remove('darkTheme');
+    uiToggle.innerHTML = "🌞";
+    uiToggle.title = "Switch to dark mode";
+  }
+  else{    
+    body.classList.add('darkTheme');
+    body.classList.remove("lightTheme")
+    uiToggle.innerHTML = "🌛";
+    uiToggle.title = "Switch to light mode";
+  }
 }
