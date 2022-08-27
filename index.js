@@ -11,6 +11,7 @@ let readpropertiesCounter = 0;
 let fpsHelper;
 let sidebar;
 let tree;
+let coordinatesbar;
 
 //Variables for StateDevice
 let firstPersonControls = false;
@@ -21,8 +22,6 @@ let clipper = false;
 let picker = false;
 let dimension = false;
 let floorplan = false
-
-
 
 ////////////////  Viewer Setup  ////////////////
 const container = document.getElementById("viewer-container");
@@ -90,12 +89,13 @@ window.ondblclick = (event) => {
 window.onmousemove = async () => {
   if(picker){
     await viewer.IFC.selector.prePickIfcItem();
+  } 
+  if(dimension){
+    trackDimensionPreview();
   }
-  
-  
 }
-////////////////  Functions  ////////////////
 
+////////////////  Functions  ////////////////
 ////////////////  Dimension Functions  ////////////////
 function createDimension(){
   viewer.dimensions.create();
@@ -105,9 +105,39 @@ function createDimension(){
   dim.textLabel.element.innerText = text;
 }
 
+function trackDimensionPreview(){
+  const previewObject = viewer.dimensions.previewObject;
+  if(previewObject.visible){ 
+    calculateWorldCoordinates(true,previewObject.position);
+  }else{
+    calculateWorldCoordinates(false,previewObject);
+  }
+ 
+  
+}
+
+function calculateWorldCoordinates(vis, position){
+  const HTMLx = document.getElementById('x')
+  const HTMLy = document.getElementById('y')
+  const HTMLz = document.getElementById('z')
+  if(vis){
+    const x = roundTo(worldOrigin.x + position.x,3);
+    const y = roundTo(worldOrigin.y + position.z,3);
+    const z = roundTo(worldOrigin.z + position.y,3);
+    HTMLx.textContent = x;
+    HTMLy.textContent = y;
+    HTMLz.textContent = z; 
+  }
+  else{
+    HTMLx.textContent = "-";
+    HTMLy.textContent = "-";
+    HTMLz.textContent = "-";  
+  }
+
+}
+
 
 ////////////////  Clipper Functions  ////////////////
-
 function createClipperPlane(){
   viewer.clipper.createPlane(); 
 }
@@ -232,7 +262,7 @@ async function loadIfc(url) {
     models.push(model);
     // Add dropped shadow and post-processing efect
     //await viewer.shadowDropper.renderShadow(model.modelID);
-    //viewer.context.renderer.postProduction.active = true;
+    viewer.context.renderer.postProduction.active = true;
 
     // Serialize properties
     loadingCaption.innerText = "Reading Properties: ";
@@ -249,7 +279,7 @@ async function loadIfc(url) {
     const matrixArr = viewer.IFC.loader.ifcManager.ifcAPI.GetCoordinationMatrix(model.modelID);
     worldOrigin.x = -matrixArr[12];
     worldOrigin.y = matrixArr[14];
-    worldOrigin.z = matrixArr[13];
+    worldOrigin.z = -matrixArr[13];
 
     await viewer.plans.computeAllPlanViews(model.modelID);
     const lineMaterial = new LineBasicMaterial({ color: 'black' });
@@ -258,7 +288,7 @@ async function loadIfc(url) {
       polygonOffsetFactor: 1, // positive value pushes polygon further away
       polygonOffsetUnits: 1,
     });   
-    //await viewer.edges.create('edgeMode',model.modelID,lineMaterial);
+    await viewer.edges.create('edgeMode',model.modelID,lineMaterial);
     await viewer.edges.create('planview',model.modelID,lineMaterial,baseMaterial1);    
     loadingText.classList.add("hidden");
 }
@@ -268,6 +298,7 @@ function initilizeApp() {
   setupfpsControls();
   tree = document.getElementById("ifc-tree-menu");  
   sidebar = document.getElementById("sidebar-content-container");
+  coordinatesbar = document.getElementById("coordinates-bar");
   const pickerbutton = document.getElementById("picker-button");
   pickerbutton.onclick = function () {
     pickerToggle();
@@ -464,14 +495,39 @@ function floorplanToggle(){
 function dimensionToggle(){
   console.log('dimensiontoggle') 
   instructiontextSet("Double click on endpoints to start and finish dimension, Press Delete to remove dimensions"); 
+  coordinatesbar.classList.toggle('hidden');
   if(!dimension){
     viewer.dimensions.active = true;
-    viewer.dimensions.previewActive = true;    
+    viewer.dimensions.previewActive = true;   
+    viewer.edges.toggle("edgeMode",true); 
+    viewer.context.renderer.postProduction.active = false;
   }
   else{
-    viewer.dimensions.active = true;
-    viewer.dimensions.previewActive = true;    
+    viewer.dimensions.active = false;
+    viewer.dimensions.previewActive = false;    
+    viewer.edges.toggle("edgeMode",false); 
+    viewer.context.renderer.postProduction.active = true;
   }
   dimension = !dimension;
 }
 
+
+
+////////////////  Utils  ////////////////
+function roundTo(n, digits) {
+  var negative = false;
+  if (digits === undefined) {
+      digits = 0;
+  }
+  if (n < 0) {
+      negative = true;
+      n = n * -1;
+  }
+  var multiplicator = Math.pow(10, digits);
+  n = parseFloat((n * multiplicator).toFixed(11));
+  n = (Math.round(n) / multiplicator).toFixed(digits);
+  if (negative) {
+      n = (n * -1).toFixed(digits);
+  }
+  return n;
+}

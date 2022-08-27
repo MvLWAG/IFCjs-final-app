@@ -256,6 +256,36 @@ ul, #myUL {
 }
 
 
+/*   -------------- Coordinates Text ----------------- */
+#coordinates-bar{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    right: 0;
+}
+
+.coordinates-text{
+    font-family: 'Roboto';
+    display: flex;
+    flex-direction: row;
+    color: var(--textcolor);
+    text-align: right;
+}
+
+.left{
+    text-align: left;    
+    margin-right: 5px;
+}
+
+.right{
+    text-align: right;    
+    margin-left: auto;  
+    margin-right: 50px; 
+    width: 90px; 
+}
+
+
+
 /*   -------------- Loading Text ----------------- */
 #loading-text{   
     color: var(--textcolor);
