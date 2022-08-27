@@ -417,12 +417,13 @@ function clipperToggle(){
 
 function floorplanToggle(){
   if(!floorplan){
-    const plans = viewer.plans.getAll(models[0].modelID);
-    const plane = viewer.plans.planLists[models[0].modelID][plans[0]].plane;
-    plane.origin = new Vector3(0,0,0);
-    plane.plane.constant = 0;
-    console.log(plane);
-    console.log(worldOrigin);
+    const id = models[0].modelID;
+    const plans = viewer.plans.getAll(id);
+    const plane = viewer.plans.planLists[id][plans[0]].plane;
+    // plane.origin = new Vector3(0,0,0);
+    // plane.plane.constant = 0;
+    // console.log(plane);
+    // console.log(worldOrigin);
     viewer.plans.goTo(models[0].modelID,plans[0]);
     viewer.edges.toggle('planview',true);
   }
