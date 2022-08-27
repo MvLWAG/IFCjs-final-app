@@ -9,6 +9,7 @@ let fpsControls;
 let instructiontext = document.getElementById("instruction-text");
 let fpsHelper;
 let sidebar;
+let tree;
 
 //Variables for StateDevice
 let firstPersonControls = false;
@@ -17,6 +18,7 @@ let modeltree = false;
 let readpropertiesCounter = 0;
 let properties;
 let clipper = false;
+let picker = false;
 
 
 ////////////////  Viewer Setup  ////////////////
@@ -75,6 +77,13 @@ window.ondblclick = (event) => {
   }
 }
 
+window.onmousemove = async () => {
+  if(picker){
+    await viewer.IFC.selector.prePickIfcItem();
+  }
+  
+  
+}
 ////////////////  Functions  ////////////////
 
 
@@ -202,7 +211,7 @@ async function loadIfc(url) {
     const model = await viewer.IFC.loadIfcUrl(url, true, loadingCalculation);
     models.push(model);
     // Add dropped shadow and post-processing efect
-    await viewer.shadowDropper.renderShadow(model.modelID);
+    //await viewer.shadowDropper.renderShadow(model.modelID);
     viewer.context.renderer.postProduction.active = true;
 
     // Serialize properties
@@ -217,8 +226,6 @@ async function loadIfc(url) {
     const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);    
     console.log(ifcProject);
     createTreeMenu(ifcProject);
-
-    const tree = document.getElementById("ifc-tree-menu");
     const matrixArr = viewer.IFC.loader.ifcManager.ifcAPI.GetCoordinationMatrix(model.modelID);
     worldOrigin.x = -matrixArr[12];
     worldOrigin.y = matrixArr[14];
@@ -230,9 +237,14 @@ async function loadIfc(url) {
 ////////////////  Initialize App ////////////////
 function initilizeApp() {
   setupfpsControls();
-  const tree = document.getElementById("ifc-tree-menu");
-  const modeltreebutton = document.getElementById("model-tree-button");
+  tree = document.getElementById("ifc-tree-menu");  
   sidebar = document.getElementById("sidebar-content-container");
+  const pickerbutton = document.getElementById("picker-button");
+  pickerbutton.onclick = function () {
+    pickerToggle();
+    pickerbutton.classList.toggle("button-active");
+  };
+  const modeltreebutton = document.getElementById("model-tree-button");
   modeltreebutton.onclick = function () {
     modelTreeToggle();
     modeltreebutton.classList.toggle("button-active");
@@ -342,9 +354,17 @@ function instructiontextSet(text){
 }
 
 ////////////////  ApplicationState Device  ////////////////
+function pickerToggle() {
+  if(picker){
+    viewer.IFC.selector.unPrepickIfcItems();
+  }
+    picker = !picker;
+    
+
+}
+
 function modelTreeToggle() {
   console.log("toggleModelTree");
-  const tree = document.getElementById("ifc-tree-menu");
   if (modeltree) {
     tree.classList.add("hidden");
     viewer.IFC.selector.unHighlightIfcItems();
