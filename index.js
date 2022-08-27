@@ -1,5 +1,5 @@
 ////////////////  Imports  ////////////////
-import { Color, Vector3, MeshLambertMaterial } from "three";
+import { Color, Vector3, MeshLambertMaterial,LineBasicMaterial, MeshBasicMaterial } from "three";
 import { IfcViewerAPI, NavigationModes } from "web-ifc-viewer";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import Stats from "three/examples/jsm/libs/stats.module";
@@ -7,6 +7,7 @@ import Stats from "three/examples/jsm/libs/stats.module";
 ////////////////  Global Variables  ////////////////
 let fpsControls;
 let instructiontext = document.getElementById("instruction-text");
+let readpropertiesCounter = 0;
 let fpsHelper;
 let sidebar;
 let tree;
@@ -15,10 +16,10 @@ let tree;
 let firstPersonControls = false;
 let orbitControls = false;
 let modeltree = false;
-let readpropertiesCounter = 0;
 let properties;
 let clipper = false;
 let picker = false;
+let floorplan = false
 
 
 ////////////////  Viewer Setup  ////////////////
@@ -36,13 +37,14 @@ initilizeApp();
 const models = [];
 const worldOrigin = { x: 0, y: 0, z: 0 };
 
-loadIfc("./models/01.ifc");
+//loadIfc("./models/01.ifc");
 //loadIfc('./models/02.ifc');
 //loadIfc('./models/03.ifc');
 // loadIfc('./models/04.ifc');
 //loadIfc('./models/05.ifc');
 // loadIfc('./models/Viaduct_Viaduct_KW04_N.ifc');
-//loadIfc('./models/Viaduct_Viaduct_KNM19.ifc');
+//loadIfc('./models/Viaduct_Viaduct_KW04_B.ifc');
+loadIfc('./models/Viaduct_Viaduct_KNM19.ifc');
 
 let forward = false;
 let backward = false;
@@ -58,16 +60,16 @@ window.onkeydown = (event) => {
     if (firstPersonControls) {
         fpsControlHelper(event, true);
     }
+    if(clipper){
+      clipperHelper(event);
+    }   
 };
 
 window.onkeyup = (event) => {
     console.log(event.code);
     if (firstPersonControls) {
         fpsControlHelper(event, false);
-    }
-    if(clipper){
-      clipperHelper(event);
-    }
+    }   
 };
 
 window.ondblclick = (event) => {
@@ -212,7 +214,7 @@ async function loadIfc(url) {
     models.push(model);
     // Add dropped shadow and post-processing efect
     //await viewer.shadowDropper.renderShadow(model.modelID);
-    viewer.context.renderer.postProduction.active = true;
+    //viewer.context.renderer.postProduction.active = true;
 
     // Serialize properties
     loadingCaption.innerText = "Reading Properties: ";
@@ -229,8 +231,17 @@ async function loadIfc(url) {
     const matrixArr = viewer.IFC.loader.ifcManager.ifcAPI.GetCoordinationMatrix(model.modelID);
     worldOrigin.x = -matrixArr[12];
     worldOrigin.y = matrixArr[14];
-    worldOrigin.z = -matrixArr[13];
+    worldOrigin.z = matrixArr[13];
 
+    await viewer.plans.computeAllPlanViews(model.modelID);
+    const lineMaterial = new LineBasicMaterial({ color: 'black' });
+    const baseMaterial1 = new MeshBasicMaterial({
+      polygonOffset: true,
+      polygonOffsetFactor: 1, // positive value pushes polygon further away
+      polygonOffsetUnits: 1,
+    });   
+    //await viewer.edges.create('edgeMode',model.modelID,lineMaterial);
+    await viewer.edges.create('planview',model.modelID,lineMaterial,baseMaterial1);    
     loadingText.classList.add("hidden");
 }
 
@@ -259,6 +270,12 @@ function initilizeApp() {
     clipperToggle();
     clipperbutton.classList.toggle("button-active");
   };
+
+  const floorplanbutton = document.getElementById("floorplan-button");
+  floorplanbutton.onclick = function (){
+    floorplanToggle();
+    floorplanbutton.classList.toggle("button-active");
+  }
 }
 
 ////////////////  Camera Controls  ////////////////
@@ -358,9 +375,7 @@ function pickerToggle() {
   if(picker){
     viewer.IFC.selector.unPrepickIfcItems();
   }
-    picker = !picker;
-    
-
+    picker = !picker;   
 }
 
 function modelTreeToggle() {
@@ -398,5 +413,24 @@ function clipperToggle(){
   instructiontextSet("Double click surface to add section plane, Press Delete to Remove planes");
   viewer.clipper.active = !clipper;
   clipper = !clipper;
+}
+
+function floorplanToggle(){
+  if(!floorplan){
+    const plans = viewer.plans.getAll(models[0].modelID);
+    const plane = viewer.plans.planLists[models[0].modelID][plans[0]].plane;
+    plane.origin = new Vector3(0,0,0);
+    plane.plane.constant = 0;
+    console.log(plane);
+    console.log(worldOrigin);
+    viewer.plans.goTo(models[0].modelID,plans[0]);
+    viewer.edges.toggle('planview',true);
+  }
+  else{
+    viewer.plans.exitPlanView();
+    viewer.edges.toggle('planview',false);
+  }
+
+  floorplan = !floorplan;
 }
 
