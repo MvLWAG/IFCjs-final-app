@@ -76,13 +76,16 @@ window.onkeyup = (event) => {
     }   
 };
 
-window.ondblclick = (event) => {
+window.ondblclick = async (event) => {
   console.log(event);
   if(clipper){   
       createClipperPlane();
   }
   if(dimension){
     createDimension();    
+  }
+  if(picker){
+    await pickElement();
   }
 }
 
@@ -96,6 +99,16 @@ window.onmousemove = async () => {
 }
 
 ////////////////  Functions  ////////////////
+
+async function pickElement(){
+  console.log("Pick Element");
+  const result = await viewer.IFC.selector.pickIfcItem();
+  if (!result) return;
+  const { modelID, id } = result;
+  const props = await viewer.IFC.getProperties(modelID, id, true, false);
+  console.log(props);
+}
+
 ////////////////  Dimension Functions  ////////////////
 function createDimension(){
   viewer.dimensions.create();
@@ -111,9 +124,7 @@ function trackDimensionPreview(){
     calculateWorldCoordinates(true,previewObject.position);
   }else{
     calculateWorldCoordinates(false,previewObject);
-  }
- 
-  
+  }  
 }
 
 function calculateWorldCoordinates(vis, position){
@@ -133,7 +144,6 @@ function calculateWorldCoordinates(vis, position){
     HTMLy.textContent = "-";
     HTMLz.textContent = "-";  
   }
-
 }
 
 
@@ -435,8 +445,13 @@ function instructiontextSet(text){
 
 ////////////////  ApplicationState Device  ////////////////
 function pickerToggle() {
-  if(picker){
-    viewer.IFC.selector.unPrepickIfcItems();
+  sidebar.classList.toggle("hidden");
+  if(!picker){
+
+  }
+  else{
+    viewer.IFC.selector.unPrepickIfcItems();  
+    viewer.IFC.selector.unpickIfcItems();     
   }
     picker = !picker;   
 }
