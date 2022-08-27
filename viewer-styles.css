@@ -14,6 +14,7 @@
     --primary-color:#3d3d3d;
     --secondary-color: #292a2d;
     --highlight-color:#003768;
+    --contrast-color:#fff;
   }
 
  .lightTheme {
@@ -74,11 +75,12 @@ html, body {
     background-color: var(--highlight-color);
     transform: scale(1.08);
     border-radius: 25px;
+    fill: var(--highlight-color);
   }
 
 .button-active {
     background-color: var(--secondary-color);
-    fill: var(--highlight-color);;
+    fill: var(--contrast-color);;
 }
 
 /*   -------------- Side Bar ----------------- */

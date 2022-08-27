@@ -30,12 +30,6 @@ viewer.grid.setGrid();
 
 initilizeApp();
 
-// const stats = new Stats();
-// stats.showPanel( 2 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-// document.body.appendChild( stats.dom );
-
-//viewer.context.ifcCamera.cameraControls.enabled = false;
-
 //List of loaded models
 const models = [];
 const worldOrigin = { x: 0, y: 0, z: 0 };
@@ -189,8 +183,7 @@ function createSimpleChild(parent, node) {
     parent.appendChild(childNode);
 
     childNode.onmouseenter = () => {
-        //viewer.IFC.selector.prepickIfcItemsByID(0, [node.expressID]);
-        viewer.IFC.selector.highlightIfcItemsByID(0,[node.expressID]);
+        viewer.IFC.selector.prepickIfcItemsByID(0, [node.expressID]);     
     };
 
     childNode.onclick = async () => {
@@ -245,7 +238,7 @@ function initilizeApp() {
     modeltreebutton.classList.toggle("button-active");
   };
   const fpsbutton = document.getElementById("first-person-button");
-    fpsbutton.onclick = function () {
+  fpsbutton.onclick = function () {
     firstPersonToggle();
     fpsbutton.classList.toggle("button-active");
   };
@@ -254,14 +247,6 @@ function initilizeApp() {
     clipperToggle();
     clipperbutton.classList.toggle("button-active");
   };
-
-  // Setup Selector Colors';
-  // const highlightMaterial = new MeshLambertMaterial({  color: 'cyan',
-  // transparent: true,
-  // opacity: 0.9})
-  console.log(viewer.IFC.selector.defHighlightMat);
-  //viewer.IFC.selector.defHighlightMat = highlightMaterial;
-
 }
 
 ////////////////  Camera Controls  ////////////////
@@ -367,6 +352,8 @@ function modelTreeToggle() {
     tree.classList.remove("hidden");
   }
   modeltree = !modeltree;
+  viewer.IFC.selector.unpickIfcItems();
+  viewer.IFC.selector.unPrepickIfcItems();
 }
 
 function firstPersonToggle() {
