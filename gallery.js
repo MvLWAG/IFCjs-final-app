@@ -9,7 +9,7 @@ console.log(models);
 
 const url = "./viewer.html";
 
-for (let i = 0; i < models.length-1; i++) {
+for (let i = 0; i < models.length; i++) {
     models[i].href = url + `?id=${i}`;
 }
 
