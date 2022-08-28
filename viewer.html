@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../../../favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="viewer-styles.css">
+    <title>IFC.js final app</title>
+</head>
+<body class="lightTheme">    
+    <div id="viewer-container"></div>    
+    <div id="header">
+        <a class="title button" href="./gallery.html" title="Back to model overview">overview</a>
+        <div id="toolbar">
+            <button id="picker-button" class="button" title="Highlight Elements">
+                <img src="./images/pointer.svg" alt="">                
+            </button>
+            <button id="model-tree-button" class="button" title="Model Tree">
+                <img src="./images/modeltree.svg" alt="">     
+            </button>
+            <button id="first-person-button" class="button" title="First Person Camera" >
+                <img src="./images/fps.svg" alt="">     
+            </button>
+            <button id="clipper-button" class="button" title="Section Plane" >
+                <img src="./images/clipper.svg" alt="">     
+            </button>   
+            <button id="dimension-button" class="button" title="Dimension" >
+                <img src="./images/ruler.svg" alt="">     
+            </button>   
+            <button id="floorplan-button" class="button" title="Floor Plan View" >
+                <img src="./images/floorplan.svg" alt="">     
+            </button>       
+        </div>
+        <div id="toggle-container"><p id="themetoggle" title="Switch to light mode">🌙</p> </div>
+    </div>
+ 
+    <div id="loading-text">
+        <p id="progress-caption"></p>
+        <p id="progress-text">0</p>
+        <p>%</p>
+    </div>   
+
+    <div id="ifc-tree-menu" class="ifc-tree-menu hidden">
+        <ul id="myUL">
+            <li id="tree-root">                
+            </li>         
+        </ul>
+    </div>
+   
+    <div id="sidebar-content-container" class="hidden">
+       <div id="property-root" class="ifc-property-menu " ></div>
+    </div>
+
+    <div id="footer">
+        <div id="instruction-text" class="hidden">test</div>
+        <div id="coordinates-bar" class= "hidden">
+            <div class="coordinates-text">   
+                <h2 class="left">X =</h2>
+                <h2 class="right" id="x"></h2>
+            </div>       
+            <div class="coordinates-text">   
+                <h2 class="left">Y =</h2>
+                <h2 class="right" id="y"></h2>
+            </div>    
+            <div class="coordinates-text">   
+                <h2 class="left">Z =</h2>
+                <h2 class="right" id="z"></h2>
+            </div>    
+        </div>
+    </div>
+    <script src="bundle.js"></script>
+</body>
+</html>
