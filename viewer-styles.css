@@ -3,28 +3,27 @@
     padding: 0; */
     box-sizing: border-box;
     font-family: "Roboto", sans-serif;    
-    --blur-filter: blur(8px);
 }
 
 /*   -------------- Theme Toggle   ----------------- */
 
 .darkTheme {
     --textcolor: #fff;
-    --normal-shadow: 0px 8px 15px rgba(255, 255, 255, 0.1);
     --primary-color:#3d3d3d;
     --secondary-color: #292a2d;
     --highlight-color:#003768;
     --contrast-color:#fff;
+    --filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(291deg) brightness(103%) contrast(104%);
   }
 
  .lightTheme {
-    --textcolor: #094e63;
-    --normal-shadow: 0px 8px 15px rgba(255, 255, 255, 0.1);
+    --textcolor: #292a2d;
     --primary-color: #f8f8f8;
     --secondary-color: #cfcfcf;
     --highlight-color:#D31A44;
-    --contrast-color:#094e63;
-  }
+    --contrast-color:#292a2d;
+    --filter: invert(15%) sepia(2%) saturate(2159%) hue-rotate(187deg) brightness(89%) contrast(92%);
+}
 
 html, body {
     overflow: hidden;    
@@ -48,6 +47,8 @@ html, body {
     z-index: 1;
     min-height: 70px;
 }
+
+
 
 #toggle-container{
     position: fixed;
@@ -82,16 +83,39 @@ html, body {
     width: fit-content;
   }
   
-  .button:hover {    
+.button:hover {    
     background-color: var(--highlight-color);
     transform: scale(1.08);
-    border-radius: 25px;
-    fill: var(--highlight-color);
-  }
+    border-radius: 25px;   
+ }
 
 .button-active {
     background-color: var(--secondary-color);
-    fill: var(--contrast-color);;
+    fill: var(--contrast-color);
+}
+
+
+.title {    
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    font-family: "Roboto", sans-serif;    
+    border: none;
+    color: var(--textcolor);
+    padding: 6px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    background-color: var(--primary-color);
+    border-radius: 5rem;
+    border:  5px solid var(--secondary-color);    
+    align-items: center;
+    display: flex;
+    flex-direction: row;
 }
 
 /*   -------------- Side Bar ----------------- */

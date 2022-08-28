@@ -38,6 +38,32 @@ initilizeApp();
 const models = [];
 const worldOrigin = { x: 0, y: 0, z: 0 };
 
+const currentUrl = window.location.href; 
+const url = new URL(currentUrl);
+const currentProjectID = url.searchParams.get("id");
+
+switch(currentProjectID) {
+  case "0":
+    loadIfc("./models/01.ifc");
+    break;
+  case "1":
+    loadIfc("./models/02.ifc");
+    break;
+  case "2":
+    loadIfc("./models/04.ifc");
+    break;
+  case "3":
+    loadIfc("./models/05.ifc");
+    break;
+  default:
+    window.alert("something went wrong, you will be directed back to the overview");
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+    link.href = "./gallery.html";
+    link.click();
+    link.remove();
+    console.log("default switch");
+}
 //loadIfc("./models/01.ifc");
 //loadIfc('./models/02.ifc');
 //loadIfc('./models/03.ifc');
@@ -45,7 +71,7 @@ const worldOrigin = { x: 0, y: 0, z: 0 };
 //loadIfc('./models/05.ifc');
 // loadIfc('./models/Viaduct_Viaduct_KW04_N.ifc');
 //loadIfc('./models/Viaduct_Viaduct_KW04_B.ifc');
-loadIfc('./models/Viaduct_Viaduct_KNM19.ifc');
+//loadIfc('./models/Viaduct_Viaduct_KNM19.ifc');
 
 let forward = false;
 let backward = false;
