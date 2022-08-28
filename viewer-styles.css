@@ -130,7 +130,7 @@ html, body {
     height: 90%;
     display: flex;
     width: 100%;
-    z-index: 1;
+    z-index: 1;   
 }
 
  #sidebar-content-container {
@@ -146,6 +146,7 @@ html, body {
     display: flex;    
     z-index: 1;  
     width: 300px;
+    color:var(--textcolor);
  }
 
 
@@ -291,6 +292,8 @@ ul, #myUL {
 }
 
 
+
+
 /*   -------------- Coordinates Text ----------------- */
 #coordinates-bar{
     position: absolute;
@@ -319,7 +322,28 @@ ul, #myUL {
     width: 90px; 
 }
 
+/*   -------------- IFC properties ----------------- */
+.ifc-property-menu {
+    border: 1px solid var(--secondary-color);
+    width: 290px;
+    position: absolute;
+    background-color: var(--primary-color);    
+    
+}
 
+.ifc-property-item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0.5rem;
+    border-bottom: solid 1px var(--secondary-color);
+    font-size: small;
+}
+
+.ifc-property-value {
+    width: 100%;
+    text-align: right;
+}
 
 /*   -------------- Loading Text ----------------- */
 #loading-text{   

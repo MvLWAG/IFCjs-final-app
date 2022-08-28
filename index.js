@@ -56,13 +56,7 @@ switch(currentProjectID) {
     loadIfc("./models/05.ifc");
     break;
   default:
-    window.alert("something went wrong, you will be directed back to the overview");
-    const link = document.createElement('a');
-    document.body.appendChild(link);
-    link.href = "./gallery.html";
-    link.click();
-    link.remove();
-    console.log("default switch");
+    loadIfc("./models/01.ifc");
 }
 //loadIfc("./models/01.ifc");
 //loadIfc('./models/02.ifc');
@@ -126,6 +120,7 @@ window.onmousemove = async () => {
 
 ////////////////  Functions  ////////////////
 
+////////////////  Picker Functions  ////////////////
 async function pickElement(){
   console.log("Pick Element");
   const result = await viewer.IFC.selector.pickIfcItem();
@@ -133,6 +128,49 @@ async function pickElement(){
   const { modelID, id } = result;
   const props = await viewer.IFC.getProperties(modelID, id, true, false);
   console.log(props);
+  createPropertiesMenu(props);
+}
+
+function createPropertiesMenu(props){
+  console.log(props);
+  const propgui = document.getElementById("property-root");
+  removeAllCProperties(propgui);
+  const psets = props.psets;
+  const mats = props.mats;
+  const type = props.type;
+
+  delete props.psets;
+  delete props.mats;
+  delete props.type;
+
+  for (let key in props) {
+    createPropertyEntry(key, props[key]);
+  }
+}
+
+function createPropertyEntry(key, value) {
+  const propContainer = document.createElement("div");
+  propContainer.classList.add("ifc-property-item");
+
+  if(value === null || value === undefined) value = "undefined";
+  else if(value.value) value = value.value;
+
+  const keyElement = document.createElement("div");
+  keyElement.textContent = key;
+  propContainer.appendChild(keyElement);
+
+  const valueElement = document.createElement("div");
+  valueElement.classList.add("ifc-property-value");
+  valueElement.textContent = value;
+  propContainer.appendChild(valueElement);
+  const propgui = document.getElementById("property-root");
+  propgui.appendChild(propContainer);
+}
+
+function removeAllCProperties(element) {
+  while (element.firstChild) {
+      element.removeChild(element.firstChild);
+  }
 }
 
 ////////////////  Dimension Functions  ////////////////
@@ -339,6 +377,7 @@ function initilizeApp() {
   tree = document.getElementById("ifc-tree-menu");  
   sidebar = document.getElementById("sidebar-content-container");
   coordinatesbar = document.getElementById("coordinates-bar");
+  properties = document.getElementById("property-root");
   const pickerbutton = document.getElementById("picker-button");
   pickerbutton.onclick = function () {
     pickerToggle();
